@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>401 - غير مصرح</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #08137b 0%, #4f09a7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .lock-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: shake 2s infinite;
+        }
+        
+        .lock-body {
+            width: 80px;
+            height: 60px;
+            background: #c5a47e;
+            border-radius: 10px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .lock-shackle {
+            width: 50px;
+            height: 50px;
+            border: 8px solid #c5a47e;
+            border-bottom: none;
+            border-radius: 50% 50% 0 0;
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .keyhole {
+            width: 8px;
+            height: 20px;
+            background: #08137b;
+            margin: 20px auto 0;
+            border-radius: 50% 50% 0 0;
+        }
+        
+        .keyhole::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #08137b;
+            margin: -1px auto 0;
+        }
+        
+        h1 {
+            font-size: 120px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #c5a47e;
+            color: #08137b;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(197, 164, 126, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(197, 164, 126, 0.6);
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.5;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 80px; }
+            h2 { font-size: 24px; }
+            p { font-size: 16px; }
+            .lock-icon { width: 80px; height: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="lock-icon">
+            <div class="lock-shackle"></div>
+            <div class="lock-body">
+                <div class="keyhole"></div>
+            </div>
+        </div>
+        
+        <h1>401</h1>
+        <h2>عذراً، الوصول مرفوض!</h2>
+        <p>
+            يبدو أنك تحاول الدخول إلى منطقة محظورة.<br>
+            يجب عليك تسجيل الدخول أولاً للوصول إلى هذه الصفحة.
+        </p>
+        <a href="/admin/login.php" class="btn">تسجيل الدخول</a>
+    </div>
+    
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>

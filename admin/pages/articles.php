@@ -1,0 +1,176 @@
+<style>
+.articles-container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.articles-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.btn-add { padding: 12px 25px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.article-card { background: var(--bg-light); padding: 20px; border-radius: 10px; transition: transform 0.3s; }
+.article-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.article-title { font-size: 18px; font-weight: 600; color: var(--primary-blue); margin-bottom: 10px; }
+.article-category { display: inline-block; padding: 5px 12px; background: var(--accent-gold); color: white; border-radius: 15px; font-size: 12px; margin-bottom: 10px; }
+.article-actions { display: flex; gap: 10px; margin-top: 15px; }
+.btn-edit, .btn-delete { padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; }
+.btn-edit { background: #3498db; color: white; }
+.btn-delete { background: #e74c3c; color: white; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--primary-blue); }
+.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; font-family: 'Cairo', sans-serif; }
+</style>
+
+<?php
+$stmt = $db->query("SELECT a.*, u.full_name as author FROM articles a JOIN admin_users u ON a.author_id = u.id ORDER BY created_at DESC");
+$articles = $stmt->fetchAll();
+?>
+
+<div class="articles-container">
+    <div class="articles-header">
+        <h2>إدارة المقالات</h2>
+        <button class="btn-add" onclick="showAddForm()"><i class="fas fa-plus"></i> إضافة مقال</button>
+    </div>
+    
+    <div class="articles-grid" id="articlesGrid">
+        <?php foreach ($articles as $article): ?>
+            <div class="article-card">
+                <div class="article-category"><?php echo $article['category']; ?></div>
+                <div class="article-title"><?php echo sanitize($article['title']); ?></div>
+                <p><?php echo sanitize(mb_substr($article['excerpt'], 0, 100)); ?>...</p>
+                <div style="color: #999; font-size: 14px; margin-top: 10px;">
+                    <i class="fas fa-user"></i> <?php echo $article['author']; ?> |
+                    <i class="fas fa-eye"></i> <?php echo $article['views']; ?> مشاهدة
+                </div>
+                <div class="article-actions">
+                    <button class="btn-edit" onclick="editArticle(<?php echo $article['id']; ?>)">
+                        <i class="fas fa-edit"></i> تعديل
+                    </button>
+                    <button class="btn-delete" onclick="deleteArticle(<?php echo $article['id']; ?>)">
+                        <i class="fas fa-trash"></i> حذف
+                    </button>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<div id="articleModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">إضافة مقال جديد</h2>
+            <span class="close-btn" onclick="closeModal('articleModal')">&times;</span>
+        </div>
+        <form id="articleForm">
+            <input type="hidden" id="articleId" name="id">
+            <div class="form-group">
+                <label>العنوان</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label>الرابط (slug)</label>
+                <input type="text" id="slug" name="slug" required>
+            </div>
+            <div class="form-group">
+                <label>المقتطف</label>
+                <textarea id="excerpt" name="excerpt" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>المحتوى</label>
+                <textarea id="content" name="content" rows="6" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>التصنيف</label>
+                <select id="category" name="category">
+                    <option value="article">مقالات</option>
+                    <option value="book">كتب</option>
+                    <option value="course">دورات</option>
+                    <option value="service">خدمات</option>
+                    <option value="news">أخبار</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>الوسم (Badge)</label>
+                <input type="text" id="badge" name="badge" placeholder="جديد، قريباً، إطلاق">
+            </div>
+            <div class="form-group">
+                <label>رابط الصورة</label>
+                <input type="url" id="image_url" name="image_url">
+            </div>
+            <div class="form-group">
+                <label>الحالة</label>
+                <select id="status" name="status">
+                    <option value="draft">مسودة</option>
+                    <option value="published">منشور</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">حفظ</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function showAddForm() {
+    $('#modalTitle').text('إضافة مقال جديد');
+    $('#articleForm')[0].reset();
+    $('#articleId').val('');
+    $('#articleModal').show();
+}
+
+function editArticle(id) {
+    $.get('ajax/articles.php?action=get&id=' + id, function(response) {
+        if (response.success) {
+            const article = response.data;
+            $('#modalTitle').text('تعديل المقال');
+            $('#articleId').val(article.id);
+            $('#title').val(article.title);
+            $('#slug').val(article.slug);
+            $('#excerpt').val(article.excerpt);
+            $('#content').val(article.content);
+            $('#category').val(article.category);
+            $('#badge').val(article.badge);
+            $('#image_url').val(article.image_url);
+            $('#status').val(article.status);
+            $('#articleModal').show();
+        }
+    });
+}
+
+$('#articleForm').on('submit', function(e) {
+    e.preventDefault();
+    const formData = $(this).serialize();
+    const action = $('#articleId').val() ? 'update' : 'create';
+    
+    $.post('ajax/articles.php', formData + '&action=' + action, function(response) {
+        if (response.success) {
+            Swal.fire('نجح', response.message, 'success');
+            location.reload();
+        } else {
+            Swal.fire('خطأ', response.message, 'error');
+        }
+    });
+});
+
+function deleteArticle(id) {
+    Swal.fire({
+        title: 'هل أنت متأكد؟',
+        text: 'سيتم حذف المقال نهائياً!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'نعم، احذف',
+        cancelButtonText: 'إلغاء'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.post('ajax/articles.php', { action: 'delete', id: id }, function(response) {
+                if (response.success) {
+                    Swal.fire('تم', 'تم حذف المقال', 'success');
+                    location.reload();
+                }
+            });
+        }
+    });
+}
+
+// Auto-generate slug from title
+$('#title').on('input', function() {
+    if (!$('#articleId').val()) {
+        const slug = $(this).val().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
+        $('#slug').val(slug);
+    }
+});
+</script>
