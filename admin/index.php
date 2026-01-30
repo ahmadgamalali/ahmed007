@@ -203,6 +203,8 @@ if (isset($_GET['logout'])) {
             }
         }
     </style>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/sweetalert2.all.min.js"></script>
 </head>
 <body>
     <div class="dashboard">
@@ -297,7 +299,5 @@ if (isset($_GET['logout'])) {
         </main>
     </div>
     
-    <script src="/static/js/jquery-3.6.0.min.js"></script>
-    <script src="/static/js/sweetalert2.all.min.js"></script>
 </body>
 </html>
