@@ -120,7 +120,35 @@ tmceScript.src = 'https://cdn.jsdelivr.net/npm/tinymce@6.8.0/tinymce.min.js';
 tmceScript.referrerPolicy = 'origin';
 document.head.appendChild(tmceScript);
 tmceScript.onload = () => {
-    tinymce.init({ selector: '#content', height: 300, menubar: false, plugins: 'link image code lists', toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | code' });
+    tinymce.init({ 
+        selector: '#content',
+        height: 300,
+        menubar: false,
+        plugins: 'link image code lists media table paste imagetools',
+        toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | code',
+        automatic_uploads: true,
+        images_upload_url: '/admin/ajax/upload_image.php',
+        images_upload_handler: function (blobInfo, success, failure) {
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            xhr.open('POST', '/admin/ajax/upload_image.php');
+            xhr.onload = function() {
+                if (xhr.status !== 200) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
+                }
+                var json = JSON.parse(xhr.responseText);
+                if (!json || (!json.location && !json.url)) {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                }
+                success(json.location || json.url);
+            };
+            var formData = new FormData();
+            formData.append('image', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+        }
+    });
 };
 
 function showAddForm() {
