@@ -45,3 +45,6 @@ temp/
 # Configuration (sensitive data)
 config.php.local
 config.local.php
+
+# Development & Diagnostic Scripts
+scripts/
