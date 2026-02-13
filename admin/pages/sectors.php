@@ -209,7 +209,9 @@
 </style>
 
 <?php
-$sectors = $db->query("SELECT * FROM sectors ORDER BY display_order ASC")->fetchAll();
+$stmt = $db->prepare("SELECT * FROM sectors ORDER BY display_order ASC");
+$stmt->execute();
+$sectors = $stmt->fetchAll();
 ?>
 
 <div class="sectors-container">

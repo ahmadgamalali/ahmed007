@@ -14,13 +14,14 @@ header('Access-Control-Allow-Methods: GET');
 
 try {
     // Get only public settings
-    $stmt = $db->query("
+    $stmt = $db->prepare("
         SELECT 
             setting_key,
             setting_value
         FROM site_settings
         WHERE is_public = TRUE
     ");
+    $stmt->execute();
     
     $settings = $stmt->fetchAll();
     

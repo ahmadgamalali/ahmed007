@@ -15,7 +15,6 @@ try {
     ];
 } catch(PDOException $e) {
     $stats = ['messages' => 0, 'articles' => 0, 'services' => 0, 'total_messages' => 0];
-    $stats = ['messages' => 0, 'articles' => 0, 'services' => 0, 'total_messages' => 0, 'sectors' => 0, 'brands' => 0];
 }
 
 // Logout handler
@@ -352,6 +351,9 @@ if (isset($_GET['logout'])) {
             
             <div class="content-area">
                 <?php
+                // Whitelist allowed pages to prevent LFI attack
+                $allowed_pages = ['dashboard', 'messages', 'articles', 'services', 'sectors', 'dictionary', 'influencers', 'users', 'newsletter', 'products', 'email_templates', 'analytics', 'reviews', 'tags', 'settings', 'activity'];
+                $page = isset($_GET['page']) && in_array($_GET['page'], $allowed_pages) ? $_GET['page'] : 'dashboard';
                 $page_file = "pages/{$page}.php";
                 if (file_exists($page_file)) {
                     include $page_file;

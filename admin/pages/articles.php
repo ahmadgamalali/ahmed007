@@ -17,7 +17,8 @@
 </style>
 
 <?php
-$stmt = $db->query("SELECT a.*, u.full_name as author FROM articles a JOIN admin_users u ON a.author_id = u.id ORDER BY created_at DESC");
+$stmt = $db->prepare("SELECT a.*, u.full_name as author FROM articles a JOIN admin_users u ON a.author_id = u.id ORDER BY a.created_at DESC");
+$stmt->execute();
 $articles = $stmt->fetchAll();
 ?>
 

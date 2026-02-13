@@ -14,7 +14,7 @@ header('Access-Control-Allow-Methods: GET');
 
 try {
     // Get active services
-    $stmt = $db->query("
+    $stmt = $db->prepare("
         SELECT 
             id,
             title,
@@ -28,6 +28,7 @@ try {
         WHERE status = 'active'
         ORDER BY display_order ASC
     ");
+    $stmt->execute();
     
     $services = $stmt->fetchAll();
     

@@ -50,7 +50,9 @@ try {
         case 'delete_sector':
             $id = (int)$_POST['id'];
             
-            $sector = $db->query("SELECT * FROM sectors WHERE id = ?", [$id])->fetch();
+            $stmt = $db->prepare("SELECT * FROM sectors WHERE id = ?");
+            $stmt->execute([$id]);
+            $sector = $stmt->fetch();
             if (!$sector) {
                 throw new Exception('القطاع غير موجود');
             }
@@ -65,7 +67,9 @@ try {
             
         case 'get_sector':
             $id = (int)$_GET['id'];
-            $sector = $db->query("SELECT * FROM sectors WHERE id = ?", [$id])->fetch();
+            $stmt = $db->prepare("SELECT * FROM sectors WHERE id = ?");
+            $stmt->execute([$id]);
+            $sector = $stmt->fetch();
             
             if (!$sector) {
                 throw new Exception('القطاع غير موجود');
