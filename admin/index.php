@@ -240,13 +240,32 @@ if (isset($_GET['logout'])) {
                     <span>الخدمات</span>
                 </a>
                 
-                <a href="?page=settings" class="menu-item <?php echo $page === 'settings' ? 'active' : ''; ?>">
-                                    <a href="?page=sectors" class="menu-item <?php echo $page === 'sectors' ? 'active' : ''; ?>">
-                                        <i class="fas fa-layer-group"></i>
-                                        <span>القطاعات و العلامات</span>
-                                    </a>
+                <a href="?page=sectors" class="menu-item <?php echo $page === 'sectors' ? 'active' : ''; ?>">
+                    <i class="fas fa-layer-group"></i>
+                    <span>القطاعات و العلامات</span>
+                </a>
+
+                <a href="?page=dictionary" class="menu-item <?php echo $page === 'dictionary' ? 'active' : ''; ?>">
+                    <i class="fas fa-book"></i>
+                    <span>القاموس العربي</span>
+                </a>
+
+                <a href="?page=influencers" class="menu-item <?php echo $page === 'influencers' ? 'active' : ''; ?>">
+                    <i class="fas fa-star"></i>
+                    <span>المؤثرون</span>
+                </a>
+
+                <a href="?page=users" class="menu-item <?php echo $page === 'users' ? 'active' : ''; ?>">
+                    <i class="fas fa-users"></i>
+                    <span>إدارة المستخدمين</span>
+                </a>
+
+                <a href="?page=newsletter" class="menu-item <?php echo $page === 'newsletter' ? 'active' : ''; ?>">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>النشرة البريدية</span>
+                </a>
                 
-                                    <a href="?page=settings" class="menu-item <?php echo $page === 'settings' ? 'active' : ''; ?>">
+                <a href="?page=settings" class="menu-item <?php echo $page === 'settings' ? 'active' : ''; ?>">
                     <i class="fas fa-cog"></i>
                     <span>الإعدادات</span>
                 </a>
@@ -274,6 +293,11 @@ if (isset($_GET['logout'])) {
                             'messages' => 'إدارة الرسائل',
                             'articles' => 'إدارة المقالات',
                             'services' => 'إدارة الخدمات',
+                            'sectors' => 'القطاعات و العلامات',
+                            'dictionary' => 'القاموس العربي',
+                            'influencers' => 'إدارة المؤثرين',
+                            'users' => 'إدارة المستخدمين',
+                            'newsletter' => 'النشرة البريدية',
                             'settings' => 'الإعدادات',
                             'activity' => 'سجل النشاطات'
                         ];

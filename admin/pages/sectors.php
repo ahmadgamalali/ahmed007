@@ -236,7 +236,9 @@ $sectors = $db->query("SELECT * FROM sectors ORDER BY display_order ASC")->fetch
     <div class="tab-content active" id="overview">
         <div class="sectors-grid">
             <?php foreach ($sectors as $sector): 
-                $brandCount = $db->query("SELECT COUNT(*) as count FROM brands WHERE sector_id = ?", [$sector['id']])->fetch()['count'];
+                $stmt = $db->prepare("SELECT COUNT(*) as count FROM brands WHERE sector_id = :sector_id");
+                $stmt->execute([':sector_id' => $sector['id']]);
+                $brandCount = $stmt->fetch()['count'];
             ?>
                 <div class="sector-card">
                     <div class="sector-card-header">

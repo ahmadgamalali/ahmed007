@@ -29,7 +29,14 @@ try {
             "UPDATE articles SET word_count = CHAR_LENGTH(content) - CHAR_LENGTH(REPLACE(content, ' ', '')) + 1 WHERE word_count = 0",
             "UPDATE articles SET reading_time = CEIL(word_count / 200.0) WHERE reading_time = 0",
         ],
-        'sectors_brands' => [
+        'messages_upgrade' => [
+            "ALTER TABLE contact_messages ADD COLUMN IF NOT EXISTS thread_id INT DEFAULT NULL",
+            "ALTER TABLE contact_messages ADD COLUMN IF NOT EXISTS parent_message_id INT NULL",
+            "ALTER TABLE contact_messages ADD COLUMN IF NOT EXISTS admin_notes LONGTEXT",
+            "ALTER TABLE contact_messages ADD COLUMN IF NOT EXISTS read_at DATETIME NULL",
+            "ALTER TABLE contact_messages MODIFY COLUMN admin_reply LONGTEXT NULL",
+            "CREATE TABLE IF NOT EXISTS message_conversations (id INT PRIMARY KEY AUTO_INCREMENT, thread_id INT UNIQUE NOT NULL, contact_email VARCHAR(100) NOT NULL, contact_name VARCHAR(100) NOT NULL, subject VARCHAR(255) NOT NULL, status ENUM('open', 'waiting', 'resolved', 'closed') DEFAULT 'open', assigned_to INT NULL, priority ENUM('low', 'normal', 'high', 'urgent') DEFAULT 'normal', last_message_at DATETIME NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, INDEX idx_thread (thread_id), INDEX idx_status (status), INDEX idx_assigned (assigned_to), INDEX idx_created (created_at), FOREIGN KEY (assigned_to) REFERENCES admin_users(id) ON DELETE SET NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+        ],
             "CREATE TABLE IF NOT EXISTS sectors (
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(255) NOT NULL,
