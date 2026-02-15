@@ -44,7 +44,7 @@
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
         }
 
         /* Navigation Bar */
@@ -56,8 +56,8 @@
             z-index: 1000;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
-            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 16px 0;
             transition: var(--transition);
         }
 
@@ -67,7 +67,8 @@
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 40px;
+            width: 100%;
         }
 
         .logo {
@@ -728,20 +729,38 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 30px;
+            }
+
+            .nav-container {
+                padding: 0 30px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
             .mobile-menu-btn {
                 display: block;
             }
 
+            .nav-container {
+                padding: 0 20px;
+            }
+
             .nav-links {
                 position: fixed;
-                top: 70px;
+                top: 65px;
                 right: -100%;
                 flex-direction: column;
                 background: var(--white);
                 width: 100%;
-                height: calc(100vh - 70px);
-                padding: 40px 0;
+                height: calc(100vh - 65px);
+                padding: 20px 0;
                 transition: var(--transition);
                 gap: 0;
             }
@@ -754,10 +773,13 @@
                 padding: 15px 0;
                 text-align: center;
                 border-bottom: 1px solid var(--neutral-light);
+                display: block;
+                width: 100%;
             }
 
             section.hero {
                 padding: 120px 20px 80px;
+                margin-top: 65px;
             }
 
             .hero h1 {
