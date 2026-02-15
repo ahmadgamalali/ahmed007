@@ -283,6 +283,204 @@
             line-height: 1.7;
         }
 
+        /* Timeline Section */
+        .timeline-section {
+            background: var(--white);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 50%;
+            width: 3px;
+            height: 100%;
+            background: var(--gradient-primary);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 52%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 52%;
+            text-align: left;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-marker {
+            right: calc(50% - 15px);
+        }
+
+        .timeline-item:nth-child(even) .timeline-marker {
+            left: calc(50% - 15px);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-gold);
+            border: 4px solid var(--white);
+            border-radius: 50%;
+            top: 30px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .timeline-marker {
+            transform: scale(1.3);
+            box-shadow: 0 0 0 8px rgba(197, 164, 126, 0.2);
+        }
+
+        .timeline-content {
+            background: var(--neutral-light);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--neutral-dark);
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            color: var(--neutral-dark);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            background: var(--neutral-light);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 280px;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(8, 19, 123, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-icon {
+            font-size: 3rem;
+            color: var(--white);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 3rem;
+            color: var(--white);
+            cursor: pointer;
+            z-index: 2001;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--accent-gold);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* CTA */
         .cta-section {
             text-align: center;
@@ -363,6 +561,32 @@
             .values-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .timeline::before {
+                right: calc(0% - 5px);
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content {
+                margin-right: 0;
+                margin-left: 60px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 60px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-marker {
+                right: auto;
+                left: -15px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-marker {
+                left: -15px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -410,8 +634,65 @@
                 grid-template-columns: 1fr;
             }
 
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
             section {
                 padding: 60px 0;
+            }
+
+            .timeline {
+                padding: 20px 0;
+            }
+
+            .timeline::before {
+                right: auto;
+                left: -15px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                margin-right: 0;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-right: 0;
+                margin-left: 50px;
+                text-align: right;
+            }
+
+            .timeline-item .timeline-marker {
+                right: auto;
+                left: -15px;
+            }
+
+            .timeline-content {
+                padding: 20px;
+                font-size: 0.95rem;
+            }
+
+            .timeline-year {
+                font-size: 1.2rem;
+            }
+
+            .timeline-title {
+                font-size: 1rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-width: 95%;
+                max-height: 95%;
+            }
+
+            .close-modal {
+                left: 15px;
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -572,6 +853,103 @@
         </div>
     </section>
 
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>رحلة النجاح</h2>
+                <p>محطات مهمة في مسيرتي المهنية والشخصية</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2005</div>
+                        <div class="timeline-title">البداية والتعليم</div>
+                        <div class="timeline-desc">بدأت رحلتي الحقيقية في دراسة الإدارة والتسويق في جامعة القاهرة، حيث اكتشفت شغفي بمجال الأعمال.</div>
+                    </div>
+                    <div class="timeline-marker"></div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2010</div>
+                        <div class="timeline-title">أول وظيفة احترافية</div>
+                        <div class="timeline-desc">التحقت بشركة تسويق رائدة في مصر وبدأت تطوير مهاراتي العملية في إدارة الحملات الإعلانية.</div>
+                    </div>
+                    <div class="timeline-marker"></div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-title">التخصص في التسويق الرقمي</div>
+                        <div class="timeline-desc">انتقلت للعمل في مجال التسويق الرقمي وبناء استراتيجيات إعلانية على وسائل التواصل الاجتماعي.</div>
+                    </div>
+                    <div class="timeline-marker"></div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2018</div>
+                        <div class="timeline-title">حصول على شهادة الدكتوراه</div>
+                        <div class="timeline-desc">أكملت دراسات عليا وحصلت على درجة الدكتوراه في الإدارة الاستراتيجية من جامعة قيمة.</div>
+                    </div>
+                    <div class="timeline-marker"></div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-title">تأسيس استشاراتي الخاصة</div>
+                        <div class="timeline-desc">أسست شركتي الخاصة لتقديم استشارات تسويقية متخصصة للشركات الناشئة والمؤسسات الكبرى.</div>
+                    </div>
+                    <div class="timeline-marker"></div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2023</div>
+                        <div class="timeline-title">التوسع الإقليمي</div>
+                        <div class="timeline-desc">توسعت خدماتي لتشمل عملاء في السعودية والإمارات والكويت وقطر مع فريق عمل محترف.</div>
+                    </div>
+                    <div class="timeline-marker"></div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-title">الحاضر والمستقبل</div>
+                        <div class="timeline-desc">مستمر في تطوير خدماتي وابتكار حلول تسويقية جديدة للسوق العربي، مع التركيز على الأمن السيبراني والتكنولوجيا.</div>
+                    </div>
+                    <div class="timeline-marker"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>معرض الصور</h2>
+                <p>لحظات مختارة من رحلتي المهنية والشخصية</p>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeImageModal()">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="">
+        </div>
+    </div>
+
     <!-- CTA Section -->
     <section>
         <div class="container">
@@ -589,6 +967,100 @@
     <div id="site-footer"></div>
 
     <script src="/static/js/site-layout.js"></script>
+    
+    <script>
+        // Fade in on scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Gallery items - sample images
+        const galleryImages = [
+            {
+                title: 'جلسة عمل',
+                src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                title: 'اجتماع استراتيجي',
+                src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                title: 'الفريق',
+                src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                title: 'عرض تقديمي',
+                src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                title: 'ورشة عمل',
+                src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80'
+            },
+            {
+                title: 'حدث خاص',
+                src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=600&q=80'
+            }
+        ];
+
+        // Load gallery items
+        function loadGallery() {
+            const galleryGrid = document.getElementById('galleryGrid');
+            if (!galleryGrid) return;
+            
+            galleryGrid.innerHTML = '';
+
+            galleryImages.forEach((image, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item fade-in-up';
+                item.innerHTML = `
+                    <img src="${image.src}" alt="${image.title}">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-eye gallery-icon"></i>
+                    </div>
+                `;
+                item.addEventListener('click', () => openImageModal(image.src));
+                galleryGrid.appendChild(item);
+                observer.observe(item);
+            });
+        }
+
+        // Image Modal
+        function openImageModal(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = src;
+            modal.style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('imageModal');
+            if (e.target === modal) {
+                closeImageModal();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadGallery);
+    </script>
 </body>
 
 </html>
