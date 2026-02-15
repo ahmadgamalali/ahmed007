@@ -262,7 +262,7 @@ $users = $usersStmt->fetchAll();
             document.getElementById('userPassword').required = false;
             document.getElementById('passwordDiv').style.display = 'none';
             
-            fetch(`ajax/users.php?action=get&id=${id}`)
+            fetch(`/admin/ajax/users.php?action=get&id=${id}`)
                 .then(r => r.json())
                 .then(data => {
                     if (data.success) {
@@ -289,7 +289,7 @@ $users = $usersStmt->fetchAll();
                 cancelButtonText: 'إلغاء'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    fetch('ajax/users.php?action=delete', {
+                    fetch('/admin/ajax/users.php?action=delete', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                         body: `id=${id}`
@@ -315,7 +315,7 @@ $users = $usersStmt->fetchAll();
             
             const params = new URLSearchParams(formData);
             
-            fetch('ajax/users.php', {
+            fetch('/admin/ajax/users.php', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: params
