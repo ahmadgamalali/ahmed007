@@ -1,4 +1,61 @@
 (function(){
+  // Custom Cursor
+  function initCustomCursor() {
+    // Create cursor element if it doesn't exist
+    if (!document.getElementById('customCursor')) {
+      const cursorDiv = document.createElement('div');
+      cursorDiv.id = 'customCursor';
+      cursorDiv.className = 'custom-cursor';
+      document.body.prepend(cursorDiv);
+    }
+
+    const customCursor = document.getElementById('customCursor');
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      customCursor.style.left = mouseX + 'px';
+      customCursor.style.top = mouseY + 'px';
+    });
+
+    // Cursor interaction with clickable elements
+    document.addEventListener('mouseenter', (e) => {
+      const target = e.target;
+      if (isClickable(target)) {
+        customCursor.classList.add('active');
+      }
+    }, true);
+
+    document.addEventListener('mouseleave', (e) => {
+      const target = e.target;
+      if (isClickable(target)) {
+        customCursor.classList.remove('active');
+      }
+    }, true);
+
+    function isClickable(element) {
+      return element.matches('a, button, .btn, .carousel-btn, .sector-tab, input[type="submit"], input[type="button"], .read-more, .carousel-dot, input, textarea, select, [onclick], .clickable');
+    }
+
+    // Hide cursor on mouse leave
+    document.addEventListener('mouseenter', () => {
+      customCursor.style.opacity = '1';
+    });
+
+    document.addEventListener('mouseleave', () => {
+      customCursor.style.opacity = '0';
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCustomCursor);
+  } else {
+    initCustomCursor();
+  }
+
   const navItems = [
     { href: '/index.html', label: 'الرئيسية' },
     { href: '/about.html', label: 'من أنا' },
