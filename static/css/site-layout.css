@@ -254,6 +254,24 @@ body.with-shared-layout .container {
   margin-top: 30px;
 }
 
+/* Utility responsive helpers for common components */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 16px; width: 100%; }
+.row { display: flex; flex-wrap: wrap; gap: 16px; }
+.col { flex: 1 1 0; min-width: 0; }
+.card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.04); }
+.hide-mobile { display: block; }
+.show-mobile { display: none; }
+
+@media (max-width: 768px) {
+  .container { padding: 0 12px; }
+  .row { gap: 12px; }
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: block !important; }
+  .card { padding: 12px; }
+  img { max-width: 100%; height: auto; }
+  h1, h2, h3, h4 { line-height: 1.2; }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .site-shell-header .inner,
